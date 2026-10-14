@@ -322,6 +322,37 @@ button:disabled {
   gap: 4px;
 }
 
+.sidebar-logout {
+  width: 100%;
+  min-height: 40px !important;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-top: 14px;
+  padding: 0 10px;
+  border: 1px solid #eeeafd !important;
+  border-radius: 9px !important;
+  background: #faf8ff !important;
+  box-shadow: none !important;
+  color: #6540d1 !important;
+  text-align: left;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+}
+
+.sidebar-logout:hover:not(:disabled) {
+  transform: none !important;
+  background: #f1edff !important;
+  box-shadow: none !important;
+}
+
+.sidebar-logout span {
+  width: 27px;
+  display: inline-grid;
+  place-items: center;
+  font-size: 1.05rem;
+}
+
 .nav-tab {
   width: 100%;
   min-height: 42px;
@@ -506,22 +537,7 @@ button:disabled {
   color: #bb702b;
 }
 
-.user-menu {
-  width: 30px;
-  min-height: 30px !important;
-  margin-left: auto;
-  border-radius: 7px !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  color: #8b93a2 !important;
-  font-size: 1.05rem !important;
-}
 
-.user-menu:hover {
-  transform: none !important;
-  box-shadow: none !important;
-  background: #f3f4f7 !important;
-}
 
 .dashboard-main {
   min-width: 0;
@@ -612,7 +628,8 @@ button:disabled {
 }
 
 .topbar-icon,
-.topbar-avatar {
+.topbar-avatar,
+.theme-toggle {
   position: relative;
   width: 33px;
   min-height: 33px !important;
@@ -628,10 +645,16 @@ button:disabled {
 }
 
 .topbar-icon:hover,
-.topbar-avatar:hover {
+.topbar-avatar:hover,
+.theme-toggle:hover {
   transform: none !important;
   box-shadow: none !important;
   background: #f1edff !important;
+}
+
+.theme-toggle {
+  border: 1px solid #e9ebf1 !important;
+  cursor: pointer;
 }
 
 .topbar-icon i {
@@ -1855,6 +1878,19 @@ button:disabled {
     scrollbar-width: thin;
   }
 
+  .sidebar-logout {
+    width: auto;
+    min-height: 34px !important;
+    gap: 6px;
+    margin: 0 0 9px auto;
+    padding: 0 9px;
+    font-size: 0.73rem !important;
+  }
+
+  .sidebar-logout span {
+    width: auto;
+  }
+
   .nav-tab {
     width: auto;
     min-height: 37px;
@@ -1881,6 +1917,10 @@ button:disabled {
 
   .search-box {
     width: min(185px, 38vw);
+  }
+
+  .theme-toggle {
+    flex: 0 0 33px;
   }
 
   .search-box kbd,
@@ -1917,6 +1957,213 @@ button:disabled {
   .member-panel {
     overflow-x: auto;
   }
+}
+
+.dashboard-shell[data-theme='dark'] {
+  border-color: #263348;
+  background: #111a2a;
+  color: #e5eaf3;
+}
+
+.dashboard-shell[data-theme='dark'] .sidebar,
+.dashboard-shell[data-theme='dark'] .topbar {
+  border-color: #293449;
+  background: #151f30;
+}
+
+.dashboard-shell[data-theme='dark'] .dashboard-main {
+  background: #111a2a;
+}
+
+.dashboard-shell[data-theme='dark'] .metric-card,
+.dashboard-shell[data-theme='dark'] .panel {
+  border-color: #293449;
+  background: #182336;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+}
+
+.dashboard-shell[data-theme='dark'] .upgrade-card {
+  border-color: #352d50;
+  background: linear-gradient(145deg, #211d34, #1c2034);
+}
+
+.dashboard-shell[data-theme='dark'] .sidebar-user,
+.dashboard-shell[data-theme='dark'] .settings-profile,
+.dashboard-shell[data-theme='dark'] .settings-field,
+.dashboard-shell[data-theme='dark'] .project-card-footer,
+.dashboard-shell[data-theme='dark'] .project-row,
+.dashboard-shell[data-theme='dark'] .activity-item,
+.dashboard-shell[data-theme='dark'] .task-item,
+.dashboard-shell[data-theme='dark'] .file-table-header,
+.dashboard-shell[data-theme='dark'] .member-table-header,
+.dashboard-shell[data-theme='dark'] .file-row,
+.dashboard-shell[data-theme='dark'] .member-row,
+.dashboard-shell[data-theme='dark'] .message-thread,
+.dashboard-shell[data-theme='dark'] .saved-event {
+  border-color: #293449;
+}
+
+.dashboard-shell[data-theme='dark'] .dashboard-brand,
+.dashboard-shell[data-theme='dark'] .dashboard-content :is(h1, h2, h3),
+.dashboard-shell[data-theme='dark'] .breadcrumbs strong,
+.dashboard-shell[data-theme='dark'] .metric-card > strong,
+.dashboard-shell[data-theme='dark'] .panel-heading h2,
+.dashboard-shell[data-theme='dark'] .access-notice h2,
+.dashboard-shell[data-theme='dark'] .project-name-line strong,
+.dashboard-shell[data-theme='dark'] .activity-copy strong,
+.dashboard-shell[data-theme='dark'] .activity-copy b,
+.dashboard-shell[data-theme='dark'] .project-card-progress .project-meta strong,
+.dashboard-shell[data-theme='dark'] .task-title,
+.dashboard-shell[data-theme='dark'] .calendar-day strong,
+.dashboard-shell[data-theme='dark'] .calendar-event strong,
+.dashboard-shell[data-theme='dark'] .file-name strong,
+.dashboard-shell[data-theme='dark'] .report-bar-row > strong,
+.dashboard-shell[data-theme='dark'] .thread-content strong,
+.dashboard-shell[data-theme='dark'] .settings-profile > div strong,
+.dashboard-shell[data-theme='dark'] .settings-field > strong,
+.dashboard-shell[data-theme='dark'] .member-identity strong,
+.dashboard-shell[data-theme='dark'] .saved-event > div strong {
+  color: #e5eaf3;
+}
+
+.dashboard-shell[data-theme='dark'] .sidebar-label,
+.dashboard-shell[data-theme='dark'] .nav-tab,
+.dashboard-shell[data-theme='dark'] .sidebar-user-info span,
+.dashboard-shell[data-theme='dark'] .sidebar-user-info strong,
+.dashboard-shell[data-theme='dark'] .upgrade-card p,
+.dashboard-shell[data-theme='dark'] .breadcrumbs,
+.dashboard-shell[data-theme='dark'] .page-description,
+.dashboard-shell[data-theme='dark'] .eyebrow,
+.dashboard-shell[data-theme='dark'] .metric-card > p,
+.dashboard-shell[data-theme='dark'] .metric-foot,
+.dashboard-shell[data-theme='dark'] .metric-neutral,
+.dashboard-shell[data-theme='dark'] .panel-heading p,
+.dashboard-shell[data-theme='dark'] .access-notice p,
+.dashboard-shell[data-theme='dark'] .project-name-line > span,
+.dashboard-shell[data-theme='dark'] .project-meta,
+.dashboard-shell[data-theme='dark'] .project-card > p,
+.dashboard-shell[data-theme='dark'] .project-card > .project-status,
+.dashboard-shell[data-theme='dark'] .project-card-footer,
+.dashboard-shell[data-theme='dark'] .activity-copy p,
+.dashboard-shell[data-theme='dark'] .activity-copy span,
+.dashboard-shell[data-theme='dark'] .task-title small,
+.dashboard-shell[data-theme='dark'] .task-date,
+.dashboard-shell[data-theme='dark'] .calendar-day,
+.dashboard-shell[data-theme='dark'] .calendar-time,
+.dashboard-shell[data-theme='dark'] .calendar-empty,
+.dashboard-shell[data-theme='dark'] .file-table-header,
+.dashboard-shell[data-theme='dark'] .member-table-header,
+.dashboard-shell[data-theme='dark'] .file-row,
+.dashboard-shell[data-theme='dark'] .member-row,
+.dashboard-shell[data-theme='dark'] .report-bar-row,
+.dashboard-shell[data-theme='dark'] .thread-content > span,
+.dashboard-shell[data-theme='dark'] .thread-time,
+.dashboard-shell[data-theme='dark'] .settings-profile > div span,
+.dashboard-shell[data-theme='dark'] .settings-field > span,
+.dashboard-shell[data-theme='dark'] .member-identity small,
+.dashboard-shell[data-theme='dark'] .member-state,
+.dashboard-shell[data-theme='dark'] .empty-state,
+.dashboard-shell[data-theme='dark'] .empty-panel,
+.dashboard-shell[data-theme='dark'] .inline-form label,
+.dashboard-shell[data-theme='dark'] .settings-input,
+.dashboard-shell[data-theme='dark'] .event-date,
+.dashboard-shell[data-theme='dark'] .saved-event > div span {
+  color: #a8b4c7;
+}
+
+.dashboard-shell[data-theme='dark'] .nav-tab:hover {
+  background: #24243b;
+  color: #c9b8ff;
+}
+
+.dashboard-shell[data-theme='dark'] .nav-tab-active,
+.dashboard-shell[data-theme='dark'] .nav-tab-active:hover {
+  background: #30294a;
+  color: #d1c3ff;
+}
+
+.dashboard-shell[data-theme='dark'] .nav-mark {
+  background: #273247;
+  color: #a8b4c7;
+}
+
+.dashboard-shell[data-theme='dark'] .nav-mark-active {
+  background: #46386b;
+  color: #d1c3ff;
+}
+
+.dashboard-shell[data-theme='dark'] .sidebar-logout {
+  border-color: #3b315c !important;
+  background: #211d34 !important;
+  color: #c9b8ff !important;
+}
+
+.dashboard-shell[data-theme='dark'] .sidebar-logout:hover:not(:disabled) {
+  background: #30294a !important;
+}
+
+.dashboard-shell[data-theme='dark'] .search-box,
+.dashboard-shell[data-theme='dark'] .member-search {
+  border-color: #344157;
+  background: #111a2a;
+  color: #a8b4c7;
+}
+
+.dashboard-shell[data-theme='dark'] .search-box input,
+.dashboard-shell[data-theme='dark'] .member-search input {
+  color: #e5eaf3;
+}
+
+.dashboard-shell[data-theme='dark'] .search-box kbd {
+  border-color: #344157;
+  color: #a8b4c7;
+}
+
+.dashboard-shell[data-theme='dark'] .topbar-avatar,
+.dashboard-shell[data-theme='dark'] .theme-toggle {
+  border-color: #344157 !important;
+  background: #202b3e !important;
+  color: #d1c3ff !important;
+}
+
+.dashboard-shell[data-theme='dark'] .topbar-avatar:hover,
+.dashboard-shell[data-theme='dark'] .theme-toggle:hover {
+  background: #30294a !important;
+}
+
+.dashboard-shell[data-theme='dark'] .secondary-action {
+  border-color: #344157 !important;
+  background: #202b3e !important;
+  color: #dbe3ef !important;
+}
+
+.dashboard-shell[data-theme='dark'] .inline-form input,
+.dashboard-shell[data-theme='dark'] .inline-form select,
+.dashboard-shell[data-theme='dark'] .settings-input input,
+.dashboard-shell[data-theme='dark'] .message-compose input {
+  border-color: #344157;
+  background: #111a2a;
+  color: #e5eaf3;
+  color-scheme: dark;
+}
+
+.dashboard-shell[data-theme='dark'] .task-check {
+  border-color: #536078;
+  background: #111a2a;
+}
+
+.dashboard-shell[data-theme='dark'] .progress-track {
+  background: #293449;
+}
+
+.dashboard-shell[data-theme='dark'] .calendar-week,
+.dashboard-shell[data-theme='dark'] .calendar-day {
+  border-color: #293449;
+}
+
+.dashboard-shell[data-theme='dark'] .message-thread:hover,
+.dashboard-shell[data-theme='dark'] .message-thread.own-message {
+  background: #1d2940 !important;
 
   .file-table,
   .member-table {

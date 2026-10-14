@@ -173,6 +173,9 @@ function App() {
   const [uploading, setUploading] = useState(false);
   const [busy, setBusy] = useState(false);
   const [search, setSearch] = useState('');
+  const [theme, setTheme] = useState(() => (
+    localStorage.getItem('workspace-theme') === 'dark' ? 'dark' : 'light'
+  ));
 
   async function refreshWorkspace() {
     const [projectResult, taskResult, eventResult, fileResult, messageResult, activityResult, reportResult] =
@@ -265,6 +268,12 @@ function App() {
     } finally {
       setBusy(false);
     }
+  }
+
+  function toggleTheme() {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('workspace-theme', nextTheme);
+    setTheme(nextTheme);
   }
 
   async function runWorkspaceAction(action) {
@@ -424,7 +433,7 @@ function App() {
   const todayEvents = events.filter((event) => event.startsAt.slice(0, 10) === today);
 
   return (
-    <main className="dashboard-shell">
+    <main className="dashboard-shell" data-theme={theme}>
       <aside className="sidebar">
         <a className="brand-header dashboard-brand" href="#overview" onClick={(event) => { event.preventDefault(); setActiveTab('overview'); }}><span className="brand-mark">P</span><span>Project</span></a>
         <p className="sidebar-label">WORKSPACE</p>
@@ -437,16 +446,19 @@ function App() {
             </button>
           ))}
         </nav>
+        <button className="sidebar-logout" type="button" onClick={handleSignOut} disabled={busy}>
+          <span aria-hidden="true">↪</span>{busy ? 'Logging out…' : 'Log out'}
+        </button>
         <div className="sidebar-bottom">
           <div className="upgrade-card"><span className="upgrade-icon">✦</span><strong>Make more progress</strong><p>Keep all your projects moving in one place.</p><button type="button" onClick={() => setActiveTab('projects')}>Explore projects <span>→</span></button></div>
-          <div className="sidebar-user"><Avatar initials={initials(user.displayName || user.email)} /><div className="sidebar-user-info"><strong>{user.displayName || user.email.split('@')[0]}</strong><span>{user.role === 'admin' ? 'Administrator' : 'Member'}</span></div><button className="user-menu" type="button" onClick={handleSignOut} disabled={busy} aria-label="Sign out" title="Sign out">↗</button></div>
+          <div className="sidebar-user"><Avatar initials={initials(user.displayName || user.email)} /><div className="sidebar-user-info"><strong>{user.displayName || user.email.split('@')[0]}</strong><span>{user.role === 'admin' ? 'Administrator' : 'Member'}</span></div></div>
         </div>
       </aside>
 
       <section className="dashboard-main">
         <header className="topbar">
           <div className="breadcrumbs"><span>Workspace</span><span className="breadcrumb-separator">/</span><strong>{currentTab?.label}</strong></div>
-          <div className="topbar-actions"><label className="search-box"><span>⌕</span><input type="search" placeholder="Search projects, tasks, files..." aria-label="Search workspace" value={search} onChange={(event) => setSearch(event.target.value)} /><kbd>⌘ K</kbd></label><span className="topbar-avatar" title={user.email}>{initials(user.displayName || user.email)}</span></div>
+          <div className="topbar-actions"><label className="search-box"><span>⌕</span><input type="search" placeholder="Search projects, tasks, files..." aria-label="Search workspace" value={search} onChange={(event) => setSearch(event.target.value)} /><kbd>⌘ K</kbd></label><button className="theme-toggle" type="button" onClick={toggleTheme} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`} aria-pressed={theme === 'dark'} title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>{theme === 'dark' ? '☀' : '☾'}</button><span className="topbar-avatar" title={user.email}>{initials(user.displayName || user.email)}</span></div>
         </header>
 
         <div className="dashboard-content" id={`panel-${activeTab}`} role="tabpanel" aria-labelledby={`tab-${activeTab}`}>
