@@ -40,6 +40,9 @@ db.exec(`
     password_hash TEXT NOT NULL,
     role TEXT NOT NULL DEFAULT 'member' CHECK (role IN ('admin', 'member')),
     display_name TEXT,
+    phone_number TEXT,
+    address TEXT,
+    avatar_url TEXT,
     created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
 
@@ -114,6 +117,9 @@ db.exec(`
 const userColumns = db.pragma('table_info(users)').map((column) => column.name);
 if (!userColumns.includes('role')) db.exec("ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'member'");
 if (!userColumns.includes('display_name')) db.exec('ALTER TABLE users ADD COLUMN display_name TEXT');
+if (!userColumns.includes('phone_number')) db.exec('ALTER TABLE users ADD COLUMN phone_number TEXT');
+if (!userColumns.includes('address')) db.exec('ALTER TABLE users ADD COLUMN address TEXT');
+if (!userColumns.includes('avatar_url')) db.exec('ALTER TABLE users ADD COLUMN avatar_url TEXT');
 db.exec(`
   UPDATE users
   SET display_name = CASE
@@ -301,6 +307,9 @@ function sessionUser(user) {
     email: user.email,
     role: user.role,
     displayName: user.display_name,
+    phoneNumber: user.phone_number || '',
+    address: user.address || '',
+    avatarUrl: user.avatar_url || '',
   };
 }
 
@@ -310,7 +319,7 @@ function requireSignedIn(req, res, next) {
     return;
   }
   const user = db
-    .prepare('SELECT id, email, role, display_name FROM users WHERE id = ?')
+    .prepare('SELECT id, email, role, display_name, phone_number, address, avatar_url FROM users WHERE id = ?')
     .get(req.session.userId);
   if (!user) {
     res.status(401).json({ error: 'Your session is no longer valid. Please sign in again.' });
@@ -352,13 +361,34 @@ function setSessionLifetime(req, remember) {
   req.session.cookie.maxAge = remember === true ? 30 * day : day;
 }
 
+function normalizePhoneNumber(value) {
+  if (typeof value !== 'string') return '';
+  const normalized = value.trim().replace(/[\s-]/g, '');
+  return normalized.length <= 32 ? normalized : normalized.slice(0, 32);
+}
+
+function normalizeAddress(value) {
+  if (typeof value !== 'string') return '';
+  return value.trim().slice(0, 200);
+}
+
+function normalizeAvatarUrl(value) {
+  if (typeof value !== 'string') return '';
+  const trimmed = value.trim();
+  if (!trimmed) return '';
+  if (/^https?:\/\//i.test(trimmed) || /^data:image\//i.test(trimmed)) {
+    return trimmed.slice(0, 2048);
+  }
+  return '';
+}
+
 app.get('/api/auth/me', (req, res) => {
   if (!req.session.userId) {
     res.json({ user: null });
     return;
   }
 
-  const user = db.prepare('SELECT id, email, role, display_name FROM users WHERE id = ?').get(req.session.userId);
+  const user = db.prepare('SELECT id, email, role, display_name, phone_number, address, avatar_url FROM users WHERE id = ?').get(req.session.userId);
   if (!user) {
     req.session.destroy((error) => {
       if (error) {
@@ -754,13 +784,34 @@ app.get('/api/reports', requireSignedIn, (_req, res) => {
 
 app.patch('/api/profile', requireSignedIn, (req, res) => {
   const displayName = typeof req.body?.displayName === 'string' ? req.body.displayName.trim() : '';
+  const phoneNumber = normalizePhoneNumber(req.body?.phoneNumber);
+  const address = normalizeAddress(req.body?.address);
+  const avatarUrl = normalizeAvatarUrl(req.body?.avatarUrl);
+
   if (!displayName || displayName.length > 60) {
     res.status(400).json({ error: 'Display name must be between 1 and 60 characters.' });
     return;
   }
-  db.prepare('UPDATE users SET display_name = ? WHERE id = ?').run(displayName, req.user.id);
+  if (phoneNumber && phoneNumber.length > 32) {
+    res.status(400).json({ error: 'Phone number must be 32 characters or fewer.' });
+    return;
+  }
+  if (address.length > 200) {
+    res.status(400).json({ error: 'Address must be 200 characters or fewer.' });
+    return;
+  }
+
+  db.prepare('UPDATE users SET display_name = ?, phone_number = ?, address = ?, avatar_url = ? WHERE id = ?').run(
+    displayName,
+    phoneNumber,
+    address,
+    avatarUrl,
+    req.user.id,
+  );
+
+  const updatedUser = { ...req.user, display_name: displayName, phone_number: phoneNumber, address, avatar_url: avatarUrl };
   logActivity(req.user.id, 'updated profile', displayName);
-  res.json({ user: sessionUser({ ...req.user, display_name: displayName }) });
+  res.json({ user: sessionUser(updatedUser) });
 });
 
 app.post('/api/auth/logout', (req, res, next) => {

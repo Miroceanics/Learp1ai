@@ -8,7 +8,11 @@
   --bg-2: #101b2d;
   --panel: rgba(14, 25, 39, 0.82);
   --panel-border: rgba(148, 163, 184, 0.18);
-  --primary: #7c3aed;
+  --primary: #2563eb;
+  --primary-strong: #1d4ed8;
+  --primary-soft: #edf5ff;
+  --primary-soft-strong: #dfeeff;
+  --primary-highlight: #60a5fa;
   --text: #e5eefb;
   --muted: #a8b4c7;
   --shadow: rgba(15, 23, 42, 0.55);
@@ -26,7 +30,7 @@ body {
   place-items: center;
   padding: 24px 0;
   background:
-    radial-gradient(circle at top left, rgba(124, 58, 237, 0.35), transparent 30%),
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.35), transparent 30%),
     radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.2), transparent 25%),
     linear-gradient(135deg, var(--bg-1), var(--bg-2));
 }
@@ -73,8 +77,8 @@ input {
   border-radius: 12px;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, var(--primary), #60a5fa);
-  box-shadow: 0 12px 28px rgba(124, 58, 237, 0.5);
+  background: linear-gradient(135deg, var(--primary), var(--primary-highlight));
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.5);
 }
 
 .hero {
@@ -165,8 +169,8 @@ label {
 }
 
 .field input:focus {
-  border-color: rgba(124, 58, 237, 0.8);
-  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.15);
+  border-color: rgba(37, 99, 235, 0.8);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
 }
 
 .row {
@@ -197,7 +201,7 @@ label {
 .text-button {
   height: auto;
   padding: 0;
-  color: #b9a0ff;
+  color: #9ec5ff;
   background: none;
   border: 0;
   box-shadow: none;
@@ -219,14 +223,14 @@ button:not(.text-button) {
   font-size: 1rem;
   font-weight: 700;
   color: white;
-  background: linear-gradient(135deg, var(--primary), #8b5cf6);
-  box-shadow: 0 16px 30px rgba(124, 58, 237, 0.35);
+  background: linear-gradient(135deg, var(--primary), var(--primary-highlight));
+  box-shadow: 0 16px 30px rgba(37, 99, 235, 0.35);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 button:not(.text-button):hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 18px 36px rgba(124, 58, 237, 0.45);
+  box-shadow: 0 18px 36px rgba(37, 99, 235, 0.45);
 }
 
 button:disabled {
@@ -270,9 +274,9 @@ button:disabled {
   display: inline-block;
   margin: 0 0 20px;
   padding: 6px 10px;
-  border: 1px solid rgba(124, 58, 237, 0.45);
+  border: 1px solid rgba(37, 99, 235, 0.45);
   border-radius: 999px;
-  color: #d6c6ff;
+  color: #d5e7ff;
   font-size: 0.85rem;
 }
 
@@ -330,11 +334,11 @@ button:disabled {
   gap: 11px;
   margin-top: 14px;
   padding: 0 10px;
-  border: 1px solid #eeeafd !important;
+  border: 1px solid #e6efff !important;
   border-radius: 9px !important;
-  background: #faf8ff !important;
+  background: #f5f9ff !important;
   box-shadow: none !important;
-  color: #6540d1 !important;
+  color: #1d4ed8 !important;
   text-align: left;
   font-size: 0.82rem !important;
   font-weight: 600 !important;
@@ -342,7 +346,7 @@ button:disabled {
 
 .sidebar-logout:hover:not(:disabled) {
   transform: none !important;
-  background: #f1edff !important;
+  background: #eaf3ff !important;
   box-shadow: none !important;
 }
 
@@ -371,14 +375,14 @@ button:disabled {
 }
 
 .nav-tab:hover {
-  background: #f5f3ff;
-  color: #5530c5;
+  background: #f3f8ff;
+  color: #1d4ed8;
 }
 
 .nav-tab-active,
 .nav-tab-active:hover {
-  background: #f1edff;
-  color: #6139d4;
+  background: #ebf3ff;
+  color: #1d4ed8;
   font-weight: 700;
 }
 
@@ -396,8 +400,8 @@ button:disabled {
 }
 
 .nav-mark-active {
-  background: #e5dcff;
-  color: #6139d4;
+  background: #dfeeff;
+  color: #1d4ed8;
 }
 
 .nav-count {
@@ -407,8 +411,8 @@ button:disabled {
   place-items: center;
   margin-left: auto;
   border-radius: 99px;
-  background: #ece7ff;
-  color: #6440c8;
+  background: #edf5ff;
+  color: #1d4ed8;
   font-size: 0.7rem;
   font-weight: 700;
 }
@@ -420,9 +424,9 @@ button:disabled {
 .upgrade-card {
   margin: 22px 2px 18px;
   padding: 16px 13px 13px;
-  border: 1px solid #eeeafd;
+  border: 1px solid #e5f0ff;
   border-radius: 13px;
-  background: linear-gradient(145deg, #faf8ff, #f3f0ff);
+  background: linear-gradient(145deg, #f7fbff, #edf5ff);
 }
 
 .upgrade-icon {
@@ -432,8 +436,8 @@ button:disabled {
   place-items: center;
   margin-bottom: 11px;
   border-radius: 8px;
-  background: #e8e0ff;
-  color: #7349dc;
+  background: #dfeeff;
+  color: #1d4ed8;
 }
 
 .upgrade-card > strong {
@@ -456,7 +460,7 @@ button:disabled {
   border: 0;
   background: transparent;
   box-shadow: none;
-  color: #6540d1;
+  color: #1d4ed8;
   font-size: 0.74rem;
   font-weight: 700;
   cursor: pointer;
@@ -509,11 +513,21 @@ button:disabled {
   place-items: center;
   border: 2px solid #fff;
   border-radius: 50%;
-  background: #eee8ff;
-  color: #6540d1;
+  background: #eaf3ff;
+  color: #1d4ed8;
   font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
+  overflow: hidden;
+}
+
+.avatar img,
+.topbar-avatar img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .avatar-small {
@@ -524,7 +538,7 @@ button:disabled {
 
 .avatar-blue {
   background: #e4efff;
-  color: #4272c8;
+  color: #2255c7;
 }
 
 .avatar-green {
@@ -649,7 +663,7 @@ button:disabled {
 .theme-toggle:hover {
   transform: none !important;
   box-shadow: none !important;
-  background: #f1edff !important;
+  background: #edf5ff !important;
 }
 
 .theme-toggle {
@@ -670,9 +684,10 @@ button:disabled {
 
 .topbar-avatar {
   border-radius: 50% !important;
-  background: #e8e1ff !important;
-  color: #6944cf !important;
+  background: #e8f0ff !important;
+  color: #1d4ed8 !important;
   font-size: 0.76rem !important;
+  overflow: hidden;
 }
 
 .dashboard-content {
@@ -723,8 +738,8 @@ button:disabled {
   padding: 0 14px;
   border: 0;
   border-radius: 8px !important;
-  background: linear-gradient(135deg, #754de0, #623bcc) !important;
-  box-shadow: 0 5px 12px rgba(103, 66, 210, 0.18) !important;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  box-shadow: 0 5px 12px rgba(37, 99, 235, 0.18) !important;
   color: #fff !important;
   font-size: 0.75rem !important;
   font-weight: 600 !important;
@@ -781,8 +796,8 @@ button:disabled {
 }
 
 .metric-purple {
-  background: #f0eaff;
-  color: #7247d3;
+  background: #ebf3ff;
+  color: #1d4ed8;
 }
 
 .metric-blue {
@@ -894,8 +909,8 @@ button:disabled {
 }
 
 .project-purple {
-  background: #eee8ff;
-  color: #7349d8;
+  background: #e7f0ff;
+  color: #1d4ed8;
 }
 
 .project-blue {

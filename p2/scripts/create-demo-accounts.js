@@ -17,12 +17,28 @@ db.exec(`
     email TEXT NOT NULL UNIQUE COLLATE NOCASE,
     password_hash TEXT NOT NULL,
     role TEXT NOT NULL DEFAULT 'member' CHECK (role IN ('admin', 'member')),
+    display_name TEXT,
+    phone_number TEXT,
+    address TEXT,
+    avatar_url TEXT,
     created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
 `);
 
 if (!db.pragma('table_info(users)').some((column) => column.name === 'role')) {
   db.exec("ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'member'");
+}
+if (!db.pragma('table_info(users)').some((column) => column.name === 'display_name')) {
+  db.exec('ALTER TABLE users ADD COLUMN display_name TEXT');
+}
+if (!db.pragma('table_info(users)').some((column) => column.name === 'phone_number')) {
+  db.exec('ALTER TABLE users ADD COLUMN phone_number TEXT');
+}
+if (!db.pragma('table_info(users)').some((column) => column.name === 'address')) {
+  db.exec('ALTER TABLE users ADD COLUMN address TEXT');
+}
+if (!db.pragma('table_info(users)').some((column) => column.name === 'avatar_url')) {
+  db.exec('ALTER TABLE users ADD COLUMN avatar_url TEXT');
 }
 
 const accounts = [
