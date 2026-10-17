@@ -1,16 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
 const tabs = [
-  { id: 'overview', label: 'Overview', mark: 'OV' },
-  { id: 'projects', label: 'Projects', mark: 'PR' },
-  { id: 'tasks', label: 'Tasks', mark: 'TK' },
-  { id: 'calendar', label: 'Calendar', mark: 'CA' },
-  { id: 'files', label: 'Files', mark: 'FI' },
-  { id: 'reports', label: 'Reports', mark: 'RE' },
-  { id: 'activity', label: 'Activity', mark: 'AC' },
-  { id: 'messages', label: 'Messages', mark: 'MS' },
-  { id: 'settings', label: 'Settings', mark: 'SE' },
-  { id: 'members', label: 'Members', mark: 'ME' },
+  { id: 'overview', label: 'Overview', mark: 'OV', icon: 'overview' },
+  { id: 'projects', label: 'Projects', mark: 'PR', icon: 'projects' },
+  { id: 'tasks', label: 'Tasks', mark: 'TK', icon: 'tasks' },
+  { id: 'calendar', label: 'Calendar', mark: 'CA', icon: 'calendar' },
+  { id: 'files', label: 'Files', mark: 'FI', icon: 'files' },
+  { id: 'reports', label: 'Reports', mark: 'RE', icon: 'reports' },
+  { id: 'activity', label: 'Activity', mark: 'AC', icon: 'activity' },
+  { id: 'messages', label: 'Messages', mark: 'MS', icon: 'messages' },
+  { id: 'settings', label: 'Settings', mark: 'SE', icon: 'settings' },
+  { id: 'members', label: 'Members', mark: 'ME', icon: 'members' },
 ];
 
 const emptyReports = {
@@ -84,6 +84,60 @@ function initials(name = '') {
   return name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join('').toUpperCase() || '?';
 }
 
+function SidebarIcon({ name }) {
+  const commonProps = {
+    className: 'nav-icon',
+    viewBox: '0 0 24 24',
+    'aria-hidden': true,
+    focusable: 'false',
+  };
+
+  switch (name) {
+    case 'overview':
+      return (
+        <svg {...commonProps}><path d="M4 10.5 12 4l8 6.5V18a2 2 0 0 1-2 2h-3v-7H9v7H6a2 2 0 0 1-2-2v-7.5Z" /><path d="M9 20v-7h6v7" /></svg>
+      );
+    case 'projects':
+      return (
+        <svg {...commonProps}><rect x="3.5" y="4.5" width="17" height="13" rx="2.5" /><path d="M8 4.5v13M3.5 9.5h17" /></svg>
+      );
+    case 'tasks':
+      return (
+        <svg {...commonProps}><path d="M9 6.5h10" /><path d="M9 12h10" /><path d="M9 17.5h10" /><path d="m4 6.5 1.1 1.1L7.5 5" /><path d="m4 12 1.1 1.1L7.5 10.5" /><path d="m4 17.5 1.1 1.1L7.5 16" /></svg>
+      );
+    case 'calendar':
+      return (
+        <svg {...commonProps}><rect x="3.5" y="5.5" width="17" height="15" rx="2.5" /><path d="M7.5 3.5v4M16.5 3.5v4M3.5 9.5h17" /><path d="M8 13h3v3H8z" /></svg>
+      );
+    case 'files':
+      return (
+        <svg {...commonProps}><path d="M15 4.5H7.5A2.5 2.5 0 0 0 5 7v10a2.5 2.5 0 0 0 2.5 2.5h9A2.5 2.5 0 0 0 19 17V8.5L15 4.5Z" /><path d="M15 4.5v4h4" /><path d="M8.5 13h7M8.5 16h7" /></svg>
+      );
+    case 'reports':
+      return (
+        <svg {...commonProps}><path d="M5 18.5V9.5M12 18.5V5.5M19 18.5v-8" /><path d="M3.5 18.5h17" /></svg>
+      );
+    case 'activity':
+      return (
+        <svg {...commonProps}><path d="M3.5 13.5h4l2.2-6 3.9 11 2.2-6h5.7" /></svg>
+      );
+    case 'messages':
+      return (
+        <svg {...commonProps}><path d="M6 18.5V7.5A2.5 2.5 0 0 1 8.5 5h7A2.5 2.5 0 0 1 18 7.5v6A2.5 2.5 0 0 1 15.5 16H9l-3 2.5Z" /><path d="M8.5 9.5h7M8.5 12.5h5" /></svg>
+      );
+    case 'settings':
+      return (
+        <svg {...commonProps}><circle cx="12" cy="12" r="3.2" /><path d="M19.4 15a1 1 0 0 0 .2 1.1l.1.1a1.8 1.8 0 1 1-2.5 2.5l-.1-.1a1 1 0 0 0-1.1-.2 1 1 0 0 0-.6.9V19a1.8 1.8 0 1 1-3.6 0v-.2a1 1 0 0 0-.6-.9 1 1 0 0 0-1.1.2l-.1.1A1.8 1.8 0 1 1 7.2 16l.1-.1a1 1 0 0 0 .2-1.1 1 1 0 0 0-.9-.6H6.4a1.8 1.8 0 1 1 0-3.6h.2a1 1 0 0 0 .9-.6 1 1 0 0 0-.2-1.1l-.1-.1A1.8 1.8 0 1 1 9.7 6.4l.1.1a1 1 0 0 0 1.1.2 1 1 0 0 0 .6-.9V5.6a1.8 1.8 0 1 1 3.6 0v.2a1 1 0 0 0 .6.9 1 1 0 0 0 1.1-.2l.1-.1A1.8 1.8 0 1 1 17.8 9l-.1.1a1 1 0 0 0-.2 1.1 1 1 0 0 0 .9.6h.2a1.8 1.8 0 1 1 0 3.6h-.2a1 1 0 0 0-.9.6Z" /></svg>
+      );
+    case 'members':
+      return (
+        <svg {...commonProps}><path d="M16.5 18.5v-1a3.5 3.5 0 0 0-3.5-3.5H9A3.5 3.5 0 0 0 5.5 17.5v1" /><circle cx="12" cy="8.2" r="3.2" /><path d="M18.5 9.8a2.8 2.8 0 0 1 0 5.4" /><path d="M5.5 9.8a2.8 2.8 0 0 0 0 5.4" /></svg>
+      );
+    default:
+      return <svg {...commonProps}><circle cx="12" cy="12" r="7.5" /></svg>;
+  }
+}
+
 function ProjectRow({ project }) {
   const color = ['blue', 'green', 'blue'][project.name.length % 3];
   return (
@@ -116,8 +170,10 @@ function ActivityList({ items, compact = false }) {
   );
 }
 
-function OverviewPanel({ user, projects, reports, activity, onSelectTab, onNewProject }) {
+function OverviewPanel({ user, projects, tasks, reports, activity, overviewView, onOverviewViewChange, onSelectTab, onNewProject }) {
   const weekLabel = new Intl.DateTimeFormat(undefined, { weekday: 'long', month: 'long', day: 'numeric' }).format(new Date());
+  const pendingTasks = tasks.filter((task) => !task.done).slice(0, 4);
+
   return (
     <>
       <PageHeading
@@ -126,22 +182,56 @@ function OverviewPanel({ user, projects, reports, activity, onSelectTab, onNewPr
         description="Here's what's happening across your workspace today."
         action={<button className="primary-action" type="button" onClick={onNewProject}>＋ <span>New project</span></button>}
       />
-      <div className="stats-grid">
-        <article className="metric-card"><div className="metric-top"><span className="metric-icon metric-blue">PR</span><span className="metric-neutral">Workspace</span></div><p>Active projects</p><strong>{reports.projectCount}</strong><span className="metric-foot">in this workspace</span></article>
-        <article className="metric-card"><div className="metric-top"><span className="metric-icon metric-blue">TK</span><span className="metric-neutral">All projects</span></div><p>Tasks completed</p><strong>{reports.completedTasks}<span className="metric-unit"> / {reports.taskCount}</span></strong><span className="metric-foot">persisted workspace tasks</span></article>
-        <article className="metric-card"><div className="metric-top"><span className="metric-icon metric-green">TM</span><span className="metric-neutral">Completion</span></div><p>Task progress</p><strong>{reports.completionRate}%</strong><span className="metric-foot">based on completed tasks</span></article>
-        <article className="metric-card"><div className="metric-top"><span className="metric-icon metric-orange">DU</span><span className="metric-warning">Remaining</span></div><p>Upcoming tasks</p><strong>{reports.upcomingTasks}</strong><span className="metric-foot">{reports.filesCount} shared files</span></article>
+
+      <div className="overview-switcher" aria-label="Overview quick filters">
+        {['all', 'projects', 'tasks', 'activity'].map((option) => (
+          <button
+            key={option}
+            type="button"
+            className={`switch-pill${overviewView === option ? ' switch-pill-active' : ''}`}
+            onClick={() => onOverviewViewChange(option)}
+          >
+            {option === 'all' ? 'All' : option.charAt(0).toUpperCase() + option.slice(1)}
+          </button>
+        ))}
       </div>
+
+      <div className="stats-grid">
+        <article className={`metric-card${overviewView === 'all' || overviewView === 'projects' ? ' metric-card-active' : ''}`}><div className="metric-top"><span className="metric-icon metric-blue">PR</span><span className="metric-neutral">Workspace</span></div><p>Active projects</p><strong>{reports.projectCount}</strong><span className="metric-foot">in this workspace</span></article>
+        <article className={`metric-card${overviewView === 'all' || overviewView === 'tasks' ? ' metric-card-active' : ''}`}><div className="metric-top"><span className="metric-icon metric-blue">TK</span><span className="metric-neutral">All projects</span></div><p>Tasks completed</p><strong>{reports.completedTasks}<span className="metric-unit"> / {reports.taskCount}</span></strong><span className="metric-foot">persisted workspace tasks</span></article>
+        <article className={`metric-card${overviewView === 'all' ? ' metric-card-active' : ''}`}><div className="metric-top"><span className="metric-icon metric-green">TM</span><span className="metric-neutral">Completion</span></div><p>Task progress</p><strong>{reports.completionRate}%</strong><span className="metric-foot">based on completed tasks</span></article>
+        <article className={`metric-card${overviewView === 'all' || overviewView === 'activity' ? ' metric-card-active' : ''}`}><div className="metric-top"><span className="metric-icon metric-orange">DU</span><span className="metric-warning">Remaining</span></div><p>Upcoming tasks</p><strong>{reports.upcomingTasks}</strong><span className="metric-foot">{reports.filesCount} shared files</span></article>
+      </div>
+
       <div className="content-grid">
-        <section className="panel project-overview">
-          <div className="panel-heading"><div><h2>Project progress</h2><p>Progress is calculated from project tasks.</p></div><button className="subtle-button" type="button" onClick={() => onSelectTab('projects')}>View all <span>→</span></button></div>
-          <div className="project-list">{projects.slice(0, 4).map((project) => <ProjectRow key={project.id} project={project} />)}</div>
-          {!projects.length && <p className="empty-state">No projects yet. Create one to get started.</p>}
-        </section>
-        <section className="panel activity-overview">
-          <div className="panel-heading"><div><h2>Recent activity</h2><p>Latest workspace updates.</p></div><button className="icon-action" type="button" aria-label="Open activity" onClick={() => onSelectTab('activity')}>↗</button></div>
-          <ActivityList items={activity} compact />
-        </section>
+        {(overviewView === 'all' || overviewView === 'projects') && (
+          <section className="panel project-overview">
+            <div className="panel-heading"><div><h2>Project progress</h2><p>Progress is calculated from project tasks.</p></div><button className="subtle-button" type="button" onClick={() => onSelectTab('projects')}>View all <span>→</span></button></div>
+            <div className="project-list">{projects.slice(0, 4).map((project) => <ProjectRow key={project.id} project={project} />)}</div>
+            {!projects.length && <p className="empty-state">No projects yet. Create one to get started.</p>}
+          </section>
+        )}
+
+        {(overviewView === 'all' || overviewView === 'tasks') && (
+          <section className="panel task-spotlight">
+            <div className="panel-heading"><div><h2>Priority tasks</h2><p>Focused work waiting for your attention.</p></div><button className="subtle-button" type="button" onClick={() => onSelectTab('tasks')}>Open tasks <span>→</span></button></div>
+            <div className="mini-task-list">
+              {pendingTasks.length ? pendingTasks.map((task) => (
+                <button key={task.id} type="button" className="mini-task-item" onClick={() => onSelectTab('tasks')}>
+                  <span className="mini-task-title">{task.title}</span>
+                  <span className="mini-task-meta">{task.projectName || 'No project'} · {formatDate(task.dueDate)}</span>
+                </button>
+              )) : <p className="empty-state">All caught up. Nothing urgent in the queue.</p>}
+            </div>
+          </section>
+        )}
+
+        {(overviewView === 'all' || overviewView === 'activity') && (
+          <section className="panel activity-overview">
+            <div className="panel-heading"><div><h2>Recent activity</h2><p>Latest workspace updates.</p></div><button className="icon-action" type="button" aria-label="Open activity" onClick={() => onSelectTab('activity')}>↗</button></div>
+            <ActivityList items={activity} compact />
+          </section>
+        )}
       </div>
     </>
   );
@@ -182,6 +272,14 @@ function App() {
   const [theme, setTheme] = useState(() => (
     localStorage.getItem('workspace-theme') === 'dark' ? 'dark' : 'light'
   ));
+  const [overviewView, setOverviewView] = useState('all');
+  const [memberFilter, setMemberFilter] = useState('all');
+  const [selectedMemberId, setSelectedMemberId] = useState('');
+  const [settingsPrefs, setSettingsPrefs] = useState({
+    notifications: true,
+    compactMode: false,
+    autoSave: true,
+  });
 
   async function refreshWorkspace() {
     const [projectResult, taskResult, eventResult, fileResult, messageResult, activityResult, reportResult] =
@@ -387,8 +485,24 @@ function App() {
   const pendingTasks = tasks.filter((task) => !task.done);
   const filteredMembers = useMemo(() => {
     const query = memberSearch.trim().toLowerCase();
-    return members.filter((member) => !query || member.email.toLowerCase().includes(query));
-  }, [members, memberSearch]);
+    return members.filter((member) => {
+      const matchesSearch = !query || member.email.toLowerCase().includes(query) || (member.displayName || '').toLowerCase().includes(query);
+      const matchesRole = memberFilter === 'all' || member.role === memberFilter;
+      return matchesSearch && matchesRole;
+    });
+  }, [members, memberSearch, memberFilter]);
+
+  useEffect(() => {
+    if (!filteredMembers.length) {
+      if (selectedMemberId) setSelectedMemberId('');
+      return;
+    }
+    if (!selectedMemberId || !filteredMembers.some((member) => member.id === selectedMemberId)) {
+      setSelectedMemberId(filteredMembers[0].id);
+    }
+  }, [filteredMembers, selectedMemberId]);
+
+  const selectedMember = filteredMembers.find((member) => member.id === selectedMemberId) || members.find((member) => member.id === selectedMemberId) || null;
   const filteredProjects = useMemo(() => {
     const query = search.trim().toLowerCase();
     return projects.filter((project) => !query || project.name.toLowerCase().includes(query) || project.team.toLowerCase().includes(query));
@@ -449,7 +563,8 @@ function App() {
         <nav className="tab-list" role="tablist" aria-label="Dashboard sections" aria-orientation="vertical">
           {tabs.map((tab) => (
             <button className={`nav-tab${activeTab === tab.id ? ' nav-tab-active' : ''}`} id={`tab-${tab.id}`} key={tab.id} type="button" role="tab" aria-selected={activeTab === tab.id} aria-controls={`panel-${tab.id}`} onClick={() => { setActiveTab(tab.id); setMessage(''); }}>
-              <span className={`nav-mark${activeTab === tab.id ? ' nav-mark-active' : ''}`}>{tab.mark}</span><span>{tab.label}</span>
+              <span className={`nav-mark${activeTab === tab.id ? ' nav-mark-active' : ''}`}><SidebarIcon name={tab.icon} /></span>
+              <span>{tab.label}</span>
               {tab.id === 'messages' && unreadCount > 0 && <span className="nav-count">{unreadCount}</span>}
               {tab.id === 'members' && user.role === 'admin' && memberCount > 0 && <span className="nav-count">{memberCount}</span>}
             </button>
@@ -471,7 +586,7 @@ function App() {
         </header>
 
         <div className="dashboard-content" id={`panel-${activeTab}`} role="tabpanel" aria-labelledby={`tab-${activeTab}`}>
-          {activeTab === 'overview' && <OverviewPanel user={user} projects={projects} reports={reports} activity={activity} onSelectTab={setActiveTab} onNewProject={() => { setActiveTab('projects'); setShowProjectForm(true); }} />}
+          {activeTab === 'overview' && <OverviewPanel user={user} projects={projects} tasks={tasks} reports={reports} activity={activity} overviewView={overviewView} onOverviewViewChange={setOverviewView} onSelectTab={setActiveTab} onNewProject={() => { setActiveTab('projects'); setShowProjectForm(true); }} />}
 
           {activeTab === 'projects' && <>
             <PageHeading title="Projects" description="Manage and track progress across your team's projects." action={<button className="primary-action" type="button" onClick={() => setShowProjectForm((shown) => !shown)}>＋ <span>{showProjectForm ? 'Cancel' : 'New project'}</span></button>} />
@@ -536,13 +651,92 @@ function App() {
               </div>
               <div className="settings-field"><span>Email address</span><strong>{user.email}</strong></div>
               <div className="settings-field"><span>Account role</span><strong>{user.role === 'admin' ? 'Administrator' : 'Member'}</strong></div>
+              <div className="settings-quick-actions">
+                {[
+                  { key: 'notifications', label: 'Notifications', helper: 'Task reminders and updates' },
+                  { key: 'compactMode', label: 'Compact mode', helper: 'Tighter workspace spacing' },
+                  { key: 'autoSave', label: 'Auto-save', helper: 'Save profile changes instantly' },
+                ].map((item) => (
+                  <button
+                    key={item.key}
+                    type="button"
+                    className={`settings-toggle-row${settingsPrefs[item.key] ? ' is-on' : ''}`}
+                    onClick={() => setSettingsPrefs((current) => ({ ...current, [item.key]: !current[item.key] }))}
+                  >
+                    <span>
+                      <strong>{item.label}</strong>
+                      <small>{item.helper}</small>
+                    </span>
+                    <span className="toggle-switch"><span className="toggle-knob" /></span>
+                  </button>
+                ))}
+              </div>
               <div className="settings-actions"><button className="primary-action settings-save" type="submit" disabled={busy}>{busy ? 'Saving…' : 'Save changes'}</button><button className="secondary-action settings-signout" type="button" onClick={handleSignOut} disabled={busy}>Sign out</button></div>
             </form>
           </>}
 
           {activeTab === 'members' && <>
             <PageHeading title="Members" description="People with access to your Project workspace." action={user.role === 'admin' ? <span className="member-total">{members.length} people</span> : null} />
-            {user.role !== 'admin' ? <section className="panel access-notice"><span className="access-mark">!</span><div><h2>Admin access required</h2><p>The member directory contains account emails and is only available to workspace administrators.</p></div></section> : <section className="panel member-panel"><div className="panel-heading"><div><h2>Workspace members</h2><p>All people with an account in this workspace.</p></div><label className="member-search"><span>⌕</span><input type="search" placeholder="Search members..." aria-label="Search members" value={memberSearch} onChange={(event) => setMemberSearch(event.target.value)} /></label></div>{membersLoading ? <p className="member-state" role="status">Loading members…</p> : membersError ? <p className="message" role="alert">{membersError}</p> : filteredMembers.length ? <div className="member-table"><div className="member-table-header"><span>Member</span><span>Role</span><span>Joined</span><span>Status</span></div>{filteredMembers.map((member) => <div className="member-row" key={member.id}><span className="member-identity">            <Avatar initials={initials(member.displayName || member.email)} color={member.role === 'admin' ? 'blue' : 'blue'} small /><span><strong>{member.displayName || member.email}</strong><small>{member.email === user.email ? member.email : member.email}</small></span></span><span><i className={`role-dot role-${member.role}`} />{member.role === 'admin' ? 'Admin' : 'Member'}</span><span>{formatDate(member.createdAt, { month: 'short', day: 'numeric', year: 'numeric' })}</span><span className="member-active"><i /> Active</span></div>)}</div> : <p className="member-state">No members match “{memberSearch}”.</p>}</section>}          </>}
+            {user.role !== 'admin' ? <section className="panel access-notice"><span className="access-mark">!</span><div><h2>Admin access required</h2><p>The member directory contains account emails and is only available to workspace administrators.</p></div></section> : (
+              <section className="panel member-panel">
+                <div className="panel-heading"><div><h2>Workspace members</h2><p>All people with an account in this workspace.</p></div><label className="member-search"><span>⌕</span><input type="search" placeholder="Search members..." aria-label="Search members" value={memberSearch} onChange={(event) => setMemberSearch(event.target.value)} /></label></div>
+
+                <div className="member-filter-bar" aria-label="Member role filter">
+                  {['all', 'admin', 'member'].map((role) => (
+                    <button
+                      key={role}
+                      type="button"
+                      className={`filter-chip${memberFilter === role ? ' filter-chip-active' : ''}`}
+                      onClick={() => setMemberFilter(role)}
+                    >
+                      {role === 'all' ? 'All' : role === 'admin' ? 'Admins' : 'Members'}
+                    </button>
+                  ))}
+                </div>
+
+                {membersLoading ? <p className="member-state" role="status">Loading members…</p> : membersError ? <p className="message" role="alert">{membersError}</p> : filteredMembers.length ? (
+                  <div className="member-layout">
+                    <div className="member-table">
+                      <div className="member-table-header"><span>Member</span><span>Role</span><span>Joined</span><span>Status</span></div>
+                      {filteredMembers.map((member) => (
+                        <button
+                          key={member.id}
+                          type="button"
+                          className={`member-row${selectedMemberId === member.id ? ' member-row-selected' : ''}`}
+                          onClick={() => setSelectedMemberId(member.id)}
+                        >
+                          <span className="member-identity">
+                            <Avatar initials={initials(member.displayName || member.email)} color={member.role === 'admin' ? 'blue' : 'blue'} small />
+                            <span><strong>{member.displayName || member.email}</strong><small>{member.email}</small></span>
+                          </span>
+                          <span><i className={`role-dot role-${member.role}`} />{member.role === 'admin' ? 'Admin' : 'Member'}</span>
+                          <span>{formatDate(member.createdAt, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                          <span className="member-active"><i /> Active</span>
+                        </button>
+                      ))}
+                    </div>
+
+                    {selectedMember && (
+                      <aside className="member-detail-card">
+                        <div className="member-detail-header">
+                          <Avatar initials={initials(selectedMember.displayName || selectedMember.email)} color="blue" />
+                          <div>
+                            <strong>{selectedMember.displayName || selectedMember.email}</strong>
+                            <span>{selectedMember.email}</span>
+                          </div>
+                        </div>
+                        <div className="member-detail-stats">
+                          <div><label>Role</label><strong>{selectedMember.role === 'admin' ? 'Administrator' : 'Member'}</strong></div>
+                          <div><label>Joined</label><strong>{formatDate(selectedMember.createdAt, { month: 'short', day: 'numeric', year: 'numeric' })}</strong></div>
+                        </div>
+                        <button type="button" className="secondary-action">Message</button>
+                      </aside>
+                    )}
+                  </div>
+                ) : <p className="member-state">No members match “{memberSearch}”.</p>}
+              </section>
+            )}
+          </>}
 
           <footer className="dashboard-footer"><span>© {new Date().getFullYear()} Project Workspace</span><span>Made for focused work <b>✦</b></span></footer>
         </div>
